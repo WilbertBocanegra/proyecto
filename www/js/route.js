@@ -54,8 +54,11 @@ router.post('/asignatura',async(req,res)=>{
 });
 
 //ruta get aula
-router.get('/aula/',(req,res)=>{
-    res.render('aula')
+router.get('/aula/', async(req,res)=>{
+    const query = await Aula.find();
+    res.render('aula',{
+        query,
+    })
 });
 
 //ruta post aula
