@@ -1,0 +1,40 @@
+<%- include('template/header'); -%>
+<nav class="navbar navbar-dark bg-dark">
+    <a href="/" class="navbar-brand navbar-text">Atras</a>
+
+    <span class="navbar-brand  mb-0 h1">Asignatura</span>
+</nav>
+
+
+<div class="container">
+    <form id="form_asignatura" style="margin-top: 1em; margin-bottom: 1em;">
+        <div class="form-group">
+          <label>Nombre</label>
+          <input type="text" name="nombre" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Descripcion</label>
+            <input type="text" name="descripcion" class="form-control">
+          </div>
+        </form>
+        <button type="button" onclick="registrar_asignatura()" class="btn btn-primary btn-block">Guardar</button>
+
+</div>
+<script>
+
+    registrar_asignatura= () => {
+            $.ajax({
+            url:'/asignatura',
+            method:'post',
+            data:$('#form_asignatura').serialize(),
+            success:(data)=>{
+                    alert(data.message);
+            },
+            error:(err)=>{
+    
+            }
+    });
+    }
+    
+    </script>
+<%- include('template/footer'); -%>

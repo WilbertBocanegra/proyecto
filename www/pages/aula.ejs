@@ -1,0 +1,36 @@
+<%- include('template/header'); -%>
+<nav class="navbar navbar-dark bg-dark">
+    <a href="/" class="navbar-brand navbar-text">Atras</a>
+
+    <span class="navbar-brand  mb-0 h1">Aulas</span>
+</nav>
+
+
+<div class="container">
+    <form id="form_aula" style="margin-top: 1em; margin-bottom: 1em;">
+        <div class="form-group">
+          <label>Nombre</label>
+          <input type="text" name="nombre" class="form-control">
+        </div>
+        </form>
+        <button type="button" onclick="registrar_aula()" class="btn btn-primary btn-block">Guardar</button>
+
+</div>
+<script>
+
+    registrar_aula= () => {
+            $.ajax({
+            url:'/aula',
+            method:'post',
+            data:$('#form_aula').serialize(),
+            success:(data)=>{
+                    alert(data.message);
+            },
+            error:(err)=>{
+    
+            }
+    });
+    }
+    
+    </script>
+<%- include('template/footer'); -%>

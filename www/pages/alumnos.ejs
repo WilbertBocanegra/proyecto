@@ -1,0 +1,113 @@
+<%- include('template/header'); -%>
+<nav class="navbar navbar-dark bg-dark">
+        <a href="/" class="navbar-brand navbar-text">Atras</a>
+
+        <span class="navbar-brand  mb-0 h1">Registrar Alumnos</span>
+    </nav>
+    
+    <div class="container">
+<form id="form_alumnos" style="margin-top: 1em; margin-bottom: 1em;">
+        <div class="form-group">
+          <label>Nombre</label>
+          <input type="text" name="nombre" class="form-control">
+        </div>
+        <div class="form-group">
+         <label>Apellido Paterno</label>
+          <input type="text" name="apaterno" class="form-control">
+         </div>
+           <div class="form-group">
+          <label>Apellido Materno</label>
+             <input type="text" name="amaterno" class="form-control">
+            </div>
+            <div class="form-group">
+                    <label>Sexo</label>
+                    <select class="custom-select" name="sexo">
+                            <option value="hombre">Hombre</option>
+                            <option value="mujer">Mujer</option>
+
+                         </select>
+                    </div>
+                    <div class="form-group">
+                            <label>Tipo Persona</label>
+                            <select class="custom-select" name="tipopersona">
+                                    <option value="alumno">alumno</option>
+                                 </select>
+                            </div>
+                            <div class="form-group">
+                                    <label>Tipo Sangre</label>
+                                    <select class="custom-select" name="tiposangre">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                         </select>
+                                    </div>          
+        <div class="form-group">
+                <label>Telefono</label>
+                <input type="text" name="telefono" class="form-control" >
+              </div>
+              <div class="form-group">
+                    <label>Direccion</label>
+                    <input type="text" name="direccion" class="form-control" >
+                  </div>
+                  <div class="form-group">
+                        <label>Correo</label>
+                        <input type="email" name="correo" class="form-control" >
+                      </div>
+                      <div class="form-group">
+                            <label>CURP</label>
+                            <input type="text" name="curp" class="form-control" >
+                          </div>
+                          <div class="form-group">
+                                <label>Señas Particulares</label>
+                                <input type="text" name="señasparticulares" class="form-control" >
+                              </div>
+                              <div class="form-group">
+                                    <label>Grado</label>
+                                    <input type="text" name="grado" class="form-control" >
+                                  </div>
+                                  <div class="form-group">
+                                        <label>Grupo</label>
+                                        <input type="text" name="grupo" class="form-control" >
+                                      </div>
+                                      <div class="form-group">
+                                            <label>Turno</label>
+                                            <input type="text" name="turno" class="form-control" >
+                                          </div>
+                                          <div class="form-group">
+                                                <label>Foto INE</label>
+                                                <input type="text" name="foto_ine" class="form-control" >
+                                              </div>
+                                              <div class="form-group">
+                                                    <label>Nombre Tutor</label>
+                                                    <input type="text" name="nombretutor" class="form-control" >
+                                                  </div>
+                                      <div class="form-group">
+                                                <label>Matricula</label>
+                                                <input type="text" name="matricula" class="form-control" >
+                                              </div>
+                                              <div class="form-group">
+                                                        <label>Contraseña</label>
+                                                        <input type="text" name="contraseña" class="form-control" >
+                                                      </div>
+              <button type="button" onclick="toregister()" class="btn btn-primary btn-block">Guardar</button>
+      </form>
+    </div>
+
+    <script>
+
+        toregister= () => {
+                $.ajax({
+                url:'/alumnos',
+                method:'post',
+                data:$('#form_alumnos').serialize(),
+                success:(data)=>{
+                        alert(data.message);
+                },
+                error:(err)=>{
+        
+                }
+        });
+        }
+        
+        </script>
+        
+<%- include('template/footer'); -%>
