@@ -26,15 +26,15 @@
                                             <tr>
                                                 <th>N</th>
                                                 <th>Nombre</th>
-                                                
-                                    
-                                            </tr>
+                                                <th></th>
+                                           </tr>
                                                 </thead>
                                             <tbody>
                                       <% for(var i=0; i<query.length; i++){ %>
                                     <tr>
                                         <td><%= i + 1 %></td>
                                         <td><%= query[i].nombre %></td>
+                                        <td ><a href="/eliminaraula/<%= query[i]._id %>" class="btn btn-danger" style="margin-left: 1em;">Eliminar</a></td>
                                         <!--<td>
                                                 <a href="#" class="btn">Done</a>
                                                 <a href="#" class="btn btn-danger">Delete</a>
@@ -65,8 +65,9 @@
             error:(err)=>{
     
             }
+            
     });
     }
-    
+ 
     </script>
 <%- include('template/footer'); -%>

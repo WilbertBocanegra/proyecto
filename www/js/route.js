@@ -60,7 +60,12 @@ router.get('/aula/', async(req,res)=>{
         query,
     })
 });
-
+//eliminar aula
+router.get('/eliminaraula/:id', async(req,res)=>{
+    const {id}= req.params;
+    await Aula.remove({_id:id})
+   res.redirect('/aula/')
+})
 //ruta post aula
 router.post('/aula',async(req,res)=>{
     console.log(req.body);
