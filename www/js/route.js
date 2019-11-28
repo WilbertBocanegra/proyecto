@@ -14,9 +14,17 @@ const Tiposangre = require('../databasemodel/sangre');
 router.get('/', async(req,res)=>{
     //const tasks = await Task.find();
     //console.log(tasks);
-    res.render('inicio'/*,{
+    res.render('login'/*,{
         tasks
     }*/)
+});
+router.post('/iniciarsesion',async(req,res)=>{
+var matricula = req.body.matricula;
+var contraseña = req.body.contraseña;   
+const query = await Personas.findOne({matricula:matricula, contraseña:contraseña});
+res.send({
+    "message":query
+})
 });
 
 //ruta get registro
@@ -38,10 +46,18 @@ router.post('/registrar',async(req,res)=>{
 
 
 //ruta get asignatura
-router.get('/asignatura/',(req,res)=>{
-    res.render('asignatura')
+router.get('/asignatura/',async(req,res)=>{
+    const query = await Asignatura.find();
+    res.render('asignatura',{
+        query
+    })
 });
-
+//eliminar asignatura
+router.get('/eliminarasignatura/:id', async(req,res)=>{
+    const {id}= req.params;
+    await Asignatura.remove({_id:id})
+   res.redirect('/asignatura/')
+})
 //ruta post asignatura
 router.post('/asignatura',async(req,res)=>{
     console.log(req.body);
@@ -78,10 +94,18 @@ router.post('/aula',async(req,res)=>{
 });
 
 //ruta get grado
-router.get('/grado/',(req,res)=>{
-    res.render('grado')
+router.get('/grado/', async(req,res)=>{
+    const query = await Grado.find();
+    res.render('grado',{
+        query
+    });
 });
-
+//eliminar grado
+router.get('/eliminargrado/:id', async(req,res)=>{
+    const {id}= req.params;
+    await Grado.remove({_id:id})
+   res.redirect('/grado/')
+})
 //ruta post grado
 router.post('/grado',async(req,res)=>{
     console.log(req.body);
@@ -94,10 +118,18 @@ router.post('/grado',async(req,res)=>{
 });
 
 //ruta get grupo
-router.get('/grupo/',(req,res)=>{
-    res.render('grupo')
+router.get('/grupo/',async(req,res)=>{
+    const query = await Grupo.find();
+    res.render('grupo',{
+        query
+    });
 });
-
+//eliminar grupo
+router.get('/eliminargrupo/:id', async(req,res)=>{
+    const {id}= req.params;
+    await Grupo.remove({_id:id})
+   res.redirect('/grupo/')
+})
 //ruta post grupo
 router.post('/grupo',async(req,res)=>{
     console.log(req.body);
@@ -110,10 +142,18 @@ router.post('/grupo',async(req,res)=>{
 });
 
 //ruta get trimestre
-router.get('/trimestre/',(req,res)=>{
-    res.render('trimestre')
+router.get('/trimestre/', async(req,res)=>{
+    const query = await Trimestre.find();
+    res.render('trimestre',{
+        query
+    });
 });
-
+//eliminar trimestre
+router.get('/eliminartrimestre/:id', async(req,res)=>{
+    const {id}= req.params;
+    await Trimestre.remove({_id:id})
+   res.redirect('/trimestre/')
+})
 //ruta post trimestre
 router.post('/trimestre',async(req,res)=>{
     console.log(req.body);
@@ -128,9 +168,9 @@ router.post('/trimestre',async(req,res)=>{
 
 //ruta get profesor/administrador
 router.get('/profesor_administrador/', async(req,res)=>{
-    const query= Tiposangre.find();
+    const tiposangre = await Tiposangre.find();
     res.render('profesor_administrador',{
-        query
+        tiposangre
     });
 });
 
@@ -146,8 +186,15 @@ router.post('/profesor_administrador',async(req,res)=>{
 });
 
 //ruta get alumnos
-router.get('/alumnos/',(req,res)=>{
-    res.render('alumnos');
+router.get('/alumnos/', async(req,res)=>{
+    const tiposangre = await Tiposangre.find();
+    const grado = await Grado.find();
+    const grupo  = await Grupo.find();
+    res.render('alumnos',{
+        tiposangre,
+        grado,
+        grupo
+    });
 });
 
 //ruta postalumnos
@@ -164,10 +211,27 @@ router.post('/alumnos',async(req,res)=>{
 
 
 //ruta get clases
-router.get('/clases/',(req,res)=>{
-    res.render('clases');
+router.get('/clases/',async(req,res)=>{
+    const query = await Clases.find();
+    const asignatura= await Asignatura.find();
+    const profesor = await Personas.find( {$where: function() { return this.tipopersona == "maestro" }});
+     const grupo = await Grupo.find();
+     const grado = await Grado.find();
+    res.render('clases',{
+        query,
+        asignatura,
+        profesor,
+        grupo,
+        grado
+    });
 });
 
+//eliminar clases
+router.get('/eliminarclases/:id', async(req,res)=>{
+    const {id}= req.params;
+    await Clases.remove({_id:id})
+   res.redirect('/clases/');
+})
 //ruta clases
 router.post('/clases',async(req,res)=>{
     console.log(req.body);
@@ -199,10 +263,19 @@ router.post('/calificaciones',async(req,res)=>{
         "message":"La clase se guardó correctamente"
     })
 });
+//ruta get vistaa alumnos
+router.get('/vista_alumnos/',(req,res)=>{
+    res.render('vista_alumno');
+});
 
-router.post('/iniciarsesion',async(req,res)=>{
-    res.send('recibido')
-})
+//ruta get vistaa maestros
+router.get('/vista_maestros/',(req,res)=>{
+    res.render('vista_maestro');
+});
+//ruta get vistaa administrador
+router.get('/vista_administrador/',(req,res)=>{
+    res.render('vista_administrador');
+});
 router.post('/add', async(req, res) =>{
    const task = new Task(req.body);
    await task.save();

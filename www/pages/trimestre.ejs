@@ -2,29 +2,72 @@
 <nav class="navbar navbar-dark bg-dark">
     <a href="/" class="navbar-brand navbar-text">Atras</a>
 
-    <span class="navbar-brand  mb-0 h1">Aulas</span>
+    <span class="navbar-brand  mb-0 h1">Trimestres</span>
 </nav>
 
 
-<div class="container">
-    <form id="form_trimestre" style="margin-top: 1em; margin-bottom: 1em;">
-        <div class="form-group">
-          <label>Nombre</label>
-          <input type="text" name="nombre" class="form-control">
+<div class="container" >
+    <div class="row" style="margin-top:1em;">
+        <div class="col-md-5">
+                <div class="card">
+                    <div class="card-body">
+                        <form id="form_trimestre" style="margin-top: 1em; margin-bottom: 1em;">
+                            <div class="form-group">
+                              <label>Nombre</label>
+                              <input type="text" name="nombre" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>fecha inicio</label>
+                                <input type="text" name="fecha_inicio" class="form-control">
+                              </div>
+                              <div class="form-group">
+                                <label>fecha final</label>
+                                <input type="text" name="fecha_final" class="form-control">
+                              </div>
+                              <div class="form-group">
+                                <label>ciclo</label>
+                                <input type="text" name="ciclo" class="form-control">
+                              </div>
+                            </form>
+                      </div>
+                      </div>
+                      </div>
+                      <div class="col-md-7">
+                          <table class="table table-bordered table-hover">
+                              <thead>
+                                  <tr>
+                                      <th>N</th>
+                                      <th>Nombre</th>
+                                      <th>Fecha inicio</th>
+                                      <th>Fecha final</th>
+                                      <th>Ciclo</th>
+                                      <th></th>
+
+                                 </tr>
+                                      </thead>
+                                  <tbody>
+                            <% for(var i=0; i<query.length; i++){ %>
+                          <tr>
+                              <td><%= i + 1 %></td>
+                              <td><%= query[i].nombre %></td>
+                              <td><%= query[i].fecha_inicio %></td>
+                              <td><%= query[i].fecha_final %></td>
+                              <td><%= query[i].ciclo%></td>
+                              <td><a href="/eliminartrimestre/<%= query[i]._id %>" class="btn btn-danger" style="margin-left: 1em;">Eliminar</a></td>
+                              <!--<td>
+                                      <a href="#" class="btn">Done</a>
+                                      <a href="#" class="btn btn-danger">Delete</a>
+                                      <a href="#" class="btn btn-info">Edit</a>
+                                  </td>-->
+                          </tr>
+                          
+                            <% } %>
+                                  </tbody>
+                          </table> 
+                                      </div>
         </div>
-        <div class="form-group">
-            <label>fecha inicio</label>
-            <input type="text" name="fecha_inicio" class="form-control">
-          </div>
-          <div class="form-group">
-            <label>fecha final</label>
-            <input type="text" name="fecha_final" class="form-control">
-          </div>
-          <div class="form-group">
-            <label>ciclo</label>
-            <input type="text" name="ciclo" class="form-control">
-          </div>
-        </form>
+
+  
         <button type="button" onclick="registrar_trimestre()" class="btn btn-primary btn-block">Guardar</button>
 </div>
 <script>
@@ -36,6 +79,7 @@
             data:$('#form_trimestre').serialize(),
             success:(data)=>{
                     alert(data.message);
+                    location.reload();
             },
             error:(err)=>{
     

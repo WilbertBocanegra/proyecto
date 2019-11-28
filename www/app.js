@@ -3,7 +3,6 @@ const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const app = express();
-
 //connecting to db
 mongoose.connect('mongodb://localhost/secundaria')
 .then(db => console.log("Db connected"))

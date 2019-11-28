@@ -7,6 +7,10 @@
 
 
 <div class="container">
+    <div class="row" style="margin-top:1em;">
+        <div class="col-md-5">
+                <div class="card">
+                    <div class="card-body">
     <form id="form_asignatura" style="margin-top: 1em; margin-bottom: 1em;">
         <div class="form-group">
           <label>Nombre</label>
@@ -17,6 +21,40 @@
             <input type="text" name="descripcion" class="form-control">
           </div>
         </form>
+        </div>
+        </div>
+        </div>
+
+        <div class="col-md-7">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>N</th>
+                        <th>Nombre</th>
+                        <th>Descripcion</th>
+                        <th></th>
+
+                   </tr>
+                        </thead>
+                    <tbody>
+              <% for(var i=0; i<query.length; i++){ %>
+            <tr>
+                <td><%= i + 1 %></td>
+                <td><%= query[i].nombre %></td>
+                <td><%= query[i].descripcion %></td>
+                <td><a href="/eliminarasignatura/<%= query[i]._id %>" class="btn btn-danger" style="margin-left: 1em;">Eliminar</a></td>
+                <!--<td>
+                        <a href="#" class="btn">Done</a>
+                        <a href="#" class="btn btn-danger">Delete</a>
+                        <a href="#" class="btn btn-info">Edit</a>
+                    </td>-->
+            </tr>
+            
+              <% } %>
+                    </tbody>
+            </table> 
+                        </div>
+        </div>
         <button type="button" onclick="registrar_asignatura()" class="btn btn-primary btn-block">Guardar</button>
 
 </div>
@@ -29,6 +67,7 @@
             data:$('#form_asignatura').serialize(),
             success:(data)=>{
                     alert(data.message);
+                    location.reload();
             },
             error:(err)=>{
     

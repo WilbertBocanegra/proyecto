@@ -4,7 +4,6 @@
 
         <span class="navbar-brand  mb-0 h1">Registrar Alumnos</span>
     </nav>
-    
     <div class="container">
 <form id="form_alumnos" style="margin-top: 1em; margin-bottom: 1em;">
         <div class="form-group">
@@ -36,8 +35,9 @@
                             <div class="form-group">
                                     <label>Tipo Sangre</label>
                                     <select class="custom-select" name="tiposangre">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
+                                        <%for(var i=0; i<tiposangre.length; i++) {%>
+                                            <option value="<%=tiposangre[i].nombre%>"><%=tiposangre[i].nombre%></option>
+                                            <%}%>
                                          </select>
                                     </div>          
         <div class="form-group">
@@ -61,17 +61,28 @@
                                 <input type="text" name="señasparticulares" class="form-control" >
                               </div>
                               <div class="form-group">
-                                    <label>Grado</label>
-                                    <input type="text" name="grado" class="form-control" >
-                                  </div>
+                                  <label>Grado</label>
+                                  <select class="custom-select" name="grado">
+                                      <%for(var i=0; i<grado.length; i++) {%>
+                                          <option value="<%=grado[i].nombre%>"><%=grado[i].nombre%></option>
+                                          <%}%>
+                                       </select>
+                                  </div>  
                                   <div class="form-group">
-                                        <label>Grupo</label>
-                                        <input type="text" name="grupo" class="form-control" >
-                                      </div>
+                                      <label>Grupo</label>
+                                      <select class="custom-select" name="grupo">
+                                          <%for(var i=0; i<grado.length; i++) {%>
+                                              <option value="<%=grupo[i].nombre%>"><%=grupo[i].nombre%></option>
+                                              <%}%>
+                                           </select>
+                                      </div> 
                                       <div class="form-group">
-                                            <label>Turno</label>
-                                            <input type="text" name="turno" class="form-control" >
-                                          </div>
+                                          <label>Turno</label>
+                                          <select class="custom-select" name="turno">
+                                                  <option value="Matutino">Matutino</option>
+                                                  <option value="Vespertino">Vespertino</option>
+                                               </select>
+                                          </div> 
                                           <div class="form-group">
                                                 <label>Foto INE</label>
                                                 <input type="text" name="foto_ine" class="form-control" >
