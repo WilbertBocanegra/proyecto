@@ -2,6 +2,50 @@
 <nav class="navbar navbar-dark bg-dark mb-4">
     <a href="/vista_maestros/"  class="navbar-brand">atras</a>
 </nav>
+<div class="container">
+        <div class="row" style="margin-top:1em;">
+                                <div class="col-md-11">
+                                        <table class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>N</th>
+                                                    <th>Nombre</th>
+                                                    <th>Asignatura</th>
+                                                    <th>Calificación</th>
+                                                    <th>Asistencia</th>
+                                               </tr>
+                                                    </thead>
+                                                <tbody>
+                                          <% for(var i=0; i<query.length; i++){ %>
+                                        <tr>
+                                            <td><%= i + 1 %></td>
+                                            <td><%= query[i].alumnos.nombre%></td>
+                                            <td><%= query[i].asignatura%></td>
+                                            <td>   <div class="form-group">
+                                                    <select class="custom-select" name="calificacion">
+                                                               <option value="6">6</option>
+                                                               <option value="7">7</option>
+                                                               <option value="8">8</option>
+                                                               <option value="9">9</option>
+                                                               <option value="10">10</option>
+                                                </select>
+                                            <td><a href="/calificacion_maestro/<%= query[i]._id %>" class="btn <%= query[i].alumnos.asistencia ?'btn-success' : 'btn-danger'%>">Asistencia</a></td>
 
+                                            <!--<td>
+                                                    <a href="#" class="btn">Done</a>
+                                                    <a href="#" class="btn btn-danger">Delete</a>
+                                                    <a href="#" class="btn btn-info">Edit</a>
+                                                </td>-->
+                                        </tr>
+                                        
+                                          <% } %>
+                                                </tbody>
+                                        </table> 
+                                                    </div>
+                                                    <button  class="btn btn-block btn-primary">Guardar</button>
+        </div>
+       
+    
+    </div>
 
 <%- include('template/footer'); -%>

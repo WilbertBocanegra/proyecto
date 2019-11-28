@@ -2,6 +2,46 @@
 <nav class="navbar navbar-dark bg-dark mb-4">
     <a href="/vista_maestros/"  class="navbar-brand">atras</a>
 </nav>
+<div class="container">
+    <div class="row" style="margin-top:1em;">
+                            <div class="col-md-11">
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>N</th>
+                                                <th>Nombre</th>
+                                                <th>Asignatura</th>
+                                                <th>Grado</th>
+                                                <th>Grupo</th>
+                                                <th>Aula</th>
+                                                <th>Hora</th>
+                                           </tr>
+                                                </thead>
+                                            <tbody>
+                                      <% for(var i=0; i<query.length; i++){ %>
+                                    <tr>
+                                        <td><%= i + 1 %></td>
+                                        <td><%= query[i].nombre%></td>
+                                        <td><%=query[i].asignatura%></td>
+                                        <td><%=query[i].grado%></td>
+                                        <td><%=query[i].grupo%></td>
+                                        <td><%=query[i].aula%></td>
+                                        <td><%=query[i].hora%>:00</td>
+                                        <!--<td>
+                                                <a href="#" class="btn">Done</a>
+                                                <a href="#" class="btn btn-danger">Delete</a>
+                                                <a href="#" class="btn btn-info">Edit</a>
+                                            </td>-->
+                                    </tr>
+                                    
+                                      <% } %>
+                                            </tbody>
+                                    </table> 
+                                                </div>
+    </div>
+   
+
+</div>
 
 
 <%- include('template/footer'); -%>

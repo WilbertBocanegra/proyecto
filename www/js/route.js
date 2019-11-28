@@ -24,6 +24,7 @@ var matricula = req.body.matricula;
 var contraseña = req.body.contraseña;   
 const query = await Personas.findOne({matricula:matricula, contraseña:contraseña},function(err,user){
     req.session.user_id=user._id
+    req.session.nombre = user.nombre +' '+user.apaterno +' '+user.amaterno
     return user
     });
     res.send({
@@ -309,21 +310,43 @@ router.get('/perfil_alumno/',async(req,res)=>{
     });
 });
 //ruta get horario alumno
-router.get('/horarios_alumnos/',(req,res)=>{
-    res.render('horario_alumno');
+router.get('/horarios_alumnos/',async(req,res)=>{
+    var sesion=req.session.user_id;
+    var nombrecompleto=req.session.nombre;
+    const query= await Clases.find({alumno:nombrecompleto});
+    console.log(query)
+    res.render('horario_alumno',{
+        query
+    });
 });
 //ruta get calificaciones alumno
-router.get('/calificaciones_alumnos/',(req,res)=>{
+router.get('/calificaciones_alumnos/',async(req,res)=>{
     res.render('calificaciones_alumnos');
+
 });
 //ruta get calificaciones maestro
-router.get('/calificaciones_maestro/',(req,res)=>{
-    res.render('calificaciones_maestro');
+router.get('/calificaciones_maestro/',async(req,res)=>{
+   
+    var sesion=req.session.user_id;
+    var nombrecompleto=req.session.nombre;
+    console.log(nombrecompleto)
+    const query= await Clases.find({profesor:nombrecompleto});
+    console.log(query)
+    res.render('calificaciones_maestro',{
+        query
+    });
+
 });
 //ruta get horario maestro
 router.get('/horario_maestros/',async(req,res)=>{
-
-    res.render('horarios_maestro');
+    var sesion=req.session.user_id;
+    var nombrecompleto=req.session.nombre;
+    console.log(nombrecompleto)
+    const query= await Clases.find({profesor:nombrecompleto});
+    console.log(query)
+    res.render('horarios_maestro',{
+        query
+    });
 });
 //ruta get perfil maestro
 router.get('/perfil_maestro/',async(req,res)=>{
@@ -366,4 +389,17 @@ router.get('/delete/:id', async(req,res)=>{
     await Task.remove({_id:id})
     res.redirect('/');
 })
+
+
+
+
+router.get('/calificacion_maestro/:id', async(req,res)=>{
+    const {id}= req.params;
+    const query = await Clases.findById({"_id":id});
+     query.alumnos.asistencia =!query.alumnos.asistencia;
+      await query.save();
+    res.redirect('/calificaciones_maestro/');
+})
+
+
 module.exports = router;
