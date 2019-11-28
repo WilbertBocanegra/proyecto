@@ -276,6 +276,7 @@ router.get('/vista_maestros/',(req,res)=>{
 router.get('/vista_administrador/',(req,res)=>{
     res.render('vista_administrador');
 });
+
 router.post('/add', async(req, res) =>{
    const task = new Task(req.body);
    await task.save();

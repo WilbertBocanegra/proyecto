@@ -34,13 +34,10 @@
                    alert("usuario no registrado")
                  }else{
                   if(data.message.tipopersona=="maestro"){
-                    alert("maestro");
                     window.location.href="/vista_maestros/";
                   } else if(data.message.tipopersona=="alumno"){
-                    alert("alumno");
                     window.location.href="/vista_alumnos/";
                   }else if(data.message.tipopersona=="administrador"){
-                      alert("administrador");
                       window.location.href="/vista_administrador/";
                   }
                 }
