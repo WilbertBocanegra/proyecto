@@ -14,7 +14,7 @@ const Tiposangre = require('../databasemodel/sangre');
 router.get('/', async(req,res)=>{
     //const tasks = await Task.find();
     //console.log(tasks);
-    res.render('login'/*,{
+    res.render('vista_administrador'/*,{
         tasks
     }*/)
 });
