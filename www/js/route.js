@@ -242,7 +242,7 @@ router.get('/eliminarclases/:id', async(req,res)=>{
    res.redirect('/clases/');
 })
 //ruta clases
-router.post('/clases',(req,res)=>{
+router.post('/clases',async(req,res)=>{
     console.log(req.body);
     const clases = new Clases(req.body);
 
@@ -251,11 +251,19 @@ router.post('/clases',(req,res)=>{
     var items = "";
     
     var id_alumno=req.body.nombre_alumno;//.split(",");
-   
+
     id_alumno.map((a)=>{
-        const alumno =  Personas.find({_id:a});
-        console.log(alumno.nombre)
-        items+=(items==""?"":",")+"\""+a+"\":{\"calificaciones\":\"0\",\"asistencia\":false,\"nombre\":\""+alumno.nombre+"\"}";
+        Personas.find({_id:a}).then((data)=>{
+            var nombre_alumno;
+for(x in data){
+    console.log(data[x].nombre)
+    items+=(items==""?"":",")+"\""+a+"\":{\"calificaciones\":\"0\",\"asistencia\":false,\"nombre\":\""+ data[x].nombre+" "+data[x].apaterno +" "+ data[x].amaterno  +"\"}";
+}
+        }).catch((err)=>{
+console.log(err)
+        });
+        //    items+=(items==""?"":",")+"\""+a+"\":{\"calificaciones\":\"0\",\"asistencia\":false,\"nombre\":\""+ data[x].nombre+" "+data[x].apaterno +" "+ data[x].amaterno  +"\"}";
+
     })
 
     items=JSON.parse("{"+items.replace(/} {/g,",")+"}");
