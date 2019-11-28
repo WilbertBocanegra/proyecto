@@ -245,6 +245,22 @@ router.get('/eliminarclases/:id', async(req,res)=>{
 router.post('/clases',(req,res)=>{
     console.log(req.body);
     const clases = new Clases(req.body);
+
+
+    console.log(req.body.nombre_alumno);
+    var items = "";
+    
+    var id_alumno=req.body.nombre_alumno;//.split(",");
+   
+    id_alumno.map((a)=>{
+        const alumno =  Personas.find({_id:a});
+        console.log(alumno.nombre)
+        items+=(items==""?"":",")+"\""+a+"\":{\"calificaciones\":\"0\",\"asistencia\":false,\"nombre\":\""+alumno.nombre+"\"}";
+    })
+
+    items=JSON.parse("{"+items.replace(/} {/g,",")+"}");
+    console.log(items);
+    
     mongoose.connect('mongodb://localhost/secundaria',function(err,db){
       db.collection('clases').insertOne({
        nombre:req.body.nombre,
@@ -255,9 +271,12 @@ router.post('/clases',(req,res)=>{
        turno:req.body.turno,
        aula:req.body.aula,
        hora:req.body.hora,
-       alumnos:{nombre_alumno:req.body.nombre_alumno},
+       items
+    }
+    )
        
-   });
+  
+
     })
     //res.redirect('/registrar/');
 
@@ -326,12 +345,20 @@ router.get('/calificaciones_alumnos/',async(req,res)=>{
 });
 //ruta get calificaciones maestro
 router.get('/calificaciones_maestro/',async(req,res)=>{
-   
     var sesion=req.session.user_id;
     var nombrecompleto=req.session.nombre;
-    console.log(nombrecompleto)
     const query= await Clases.find({profesor:nombrecompleto});
-    console.log(query)
+/*
+    query.map((a)=>{
+        console.log(a)
+        var keys = Object.keys(a.items);
+        keys.map((e)=>{
+            const query2=  Personas.find({_id:e});
+            //console.log(e,query2);
+           // a.items[e].name=
+        })
+    });
+*/  
     res.render('calificaciones_maestro',{
         query
     });

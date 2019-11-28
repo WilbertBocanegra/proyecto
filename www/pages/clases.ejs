@@ -29,7 +29,7 @@
                                         <label>Alumnos</label>
                                         <select multiple name="nombre_alumno" class="selectpicker w-100">
                                                 <% for(var i=0; i<alumno.length; i++) {%>
-                                            <option value="<%=alumno[i].nombre%> <%=alumno[i].apaterno%> <%=alumno[i].amaterno%>"><%=alumno[i].nombre%> <%=alumno[i].apaterno%> <%=alumno[i].amaterno%></option>
+                                            <option value="<%=alumno[i]._id%>"><%=alumno[i].nombre%> <%=alumno[i].apaterno%> <%=alumno[i].amaterno%></option>
                                             <%}%>                
    
                                         </select>

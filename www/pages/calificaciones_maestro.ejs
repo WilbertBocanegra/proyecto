@@ -2,6 +2,7 @@
 <nav class="navbar navbar-dark bg-dark mb-4">
     <a href="/vista_maestros/"  class="navbar-brand">atras</a>
 </nav>
+<pre><%=query%></pre>
 <div class="container">
         <div class="row" style="margin-top:1em;">
                                 <div class="col-md-11">
@@ -16,10 +17,14 @@
                                                </tr>
                                                     </thead>
                                                 <tbody>
-                                          <% for(var i=0; i<query.length; i++){ %>
+                                          <% for(var i=0; i<query.length; i++){ 
+                                            
+                                            
+                                            
+                                            %>
                                         <tr>
                                             <td><%= i + 1 %></td>
-                                            <td><%= query[i].alumnos.nombre%></td>
+                                            <td><%= query[i].items %></td>
                                             <td><%= query[i].asignatura%></td>
                                             <td>   <div class="form-group">
                                                     <select onchange="cambio()" class="custom-select" name="calificacion">
@@ -29,7 +34,6 @@
                                                                <option value="9">9</option>
                                                                <option value="10">10</option>
                                                 </select>
-                                            <td><a href="/calificacion_maestro/<%= query[i]._id %>" class="btn <%= query[i].alumnos.asistencia ?'btn-success' : 'btn-danger'%>">Asistencia</a></td>
 
                                             <!--<td>
                                                     <a href="#" class="btn">Done</a>
