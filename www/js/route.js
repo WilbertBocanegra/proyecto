@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 
 const Personas = require('../databasemodel/profesor_administrador');
 const Asignatura = require('../databasemodel/asignatura');
@@ -14,17 +15,20 @@ const Tiposangre = require('../databasemodel/sangre');
 router.get('/', async(req,res)=>{
     //const tasks = await Task.find();
     //console.log(tasks);
-    res.render('vista_administrador'/*,{
+    res.render('login'/*,{
         tasks
     }*/)
 });
 router.post('/iniciarsesion',async(req,res)=>{
 var matricula = req.body.matricula;
 var contraseña = req.body.contraseña;   
-const query = await Personas.findOne({matricula:matricula, contraseña:contraseña});
-res.send({
-    "message":query
-})
+const query = await Personas.findOne({matricula:matricula, contraseña:contraseña},function(err,user){
+    req.session.user_id=user._id
+    return user
+    });
+    res.send({
+        "message":query
+    })
 });
 
 //ruta get registro
@@ -212,17 +216,21 @@ router.post('/alumnos',async(req,res)=>{
 
 //ruta get clases
 router.get('/clases/',async(req,res)=>{
+    
     const query = await Clases.find();
     const asignatura= await Asignatura.find();
     const profesor = await Personas.find( {$where: function() { return this.tipopersona == "maestro" }});
-     const grupo = await Grupo.find();
-     const grado = await Grado.find();
+    const alumno = await Personas.find( {$where: function() { return this.tipopersona == "alumno" }});
+    const grupo = await Grupo.find();
+    const grado = await Grado.find();
+     
     res.render('clases',{
         query,
         asignatura,
         profesor,
         grupo,
-        grado
+        grado,
+        alumno
     });
 });
 
@@ -233,11 +241,25 @@ router.get('/eliminarclases/:id', async(req,res)=>{
    res.redirect('/clases/');
 })
 //ruta clases
-router.post('/clases',async(req,res)=>{
+router.post('/clases',(req,res)=>{
     console.log(req.body);
     const clases = new Clases(req.body);
-    await clases.save();
+    mongoose.connect('mongodb://localhost/secundaria',function(err,db){
+      db.collection('clases').insertOne({
+       nombre:req.body.nombre,
+       profesor:req.body.profesor,
+       asignatura:req.body.asignatura,
+       grupo:req.body.grupo,
+       grado:req.body.grado,
+       turno:req.body.turno,
+       aula:req.body.aula,
+       hora:req.body.hora,
+       alumnos:{nombre_alumno:req.body.nombre_alumno},
+       
+   });
+    })
     //res.redirect('/registrar/');
+
     res.send({
         "message":"La clase se guardó correctamente"
     })
@@ -271,6 +293,7 @@ router.get('/vista_alumnos/',(req,res)=>{
 //ruta get vistaa maestros
 router.get('/vista_maestros/',(req,res)=>{
     res.render('vista_maestro');
+    console.log(req.session.user_id)
 });
 //ruta get vistaa administrador
 router.get('/vista_administrador/',(req,res)=>{
@@ -278,8 +301,12 @@ router.get('/vista_administrador/',(req,res)=>{
 });
 
 //ruta get perfil alumno
-router.get('/perfil_alumno/',(req,res)=>{
-    res.render('perfil_alumno');
+router.get('/perfil_alumno/',async(req,res)=>{
+    var sesion=req.session.user_id;
+    const query= await Personas.find({_id:sesion});
+    res.render('perfil_alumno',{
+        query
+    });
 });
 //ruta get horario alumno
 router.get('/horarios_alumnos/',(req,res)=>{
@@ -294,12 +321,18 @@ router.get('/calificaciones_maestro/',(req,res)=>{
     res.render('calificaciones_maestro');
 });
 //ruta get horario maestro
-router.get('/horario_maestros/',(req,res)=>{
+router.get('/horario_maestros/',async(req,res)=>{
+
     res.render('horarios_maestro');
 });
 //ruta get perfil maestro
-router.get('/perfil_maestro/',(req,res)=>{
-    res.render('perfil_maestros');
+router.get('/perfil_maestro/',async(req,res)=>{
+    var sesion=req.session.user_id;
+    const query= await Personas.find({_id:sesion});
+    res.render('perfil_maestros',{
+        query
+    });
+
 });
 router.post('/add', async(req, res) =>{
    const task = new Task(req.body);

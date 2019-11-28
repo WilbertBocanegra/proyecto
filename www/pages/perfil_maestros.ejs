@@ -2,6 +2,60 @@
 <nav class="navbar navbar-dark bg-dark mb-4">
     <a href="/vista_maestros/"  class="navbar-brand">atras</a>
 </nav>
+<div class="container">
+    <div class="row">
+    <div class="col-md-5"  style="margin-left: 21em; margin-bottom: 1em;">
 
+        <!-- Card Regular -->
+        <% for(var i=0; i<query.length; i++ ){%>
+        <div class="card card-cascade">
+        
+          <!-- Card image -->
+          <div class="view view-cascade overlay">
+            <img class="card-img-top"  style="height: 12em;" src="https://mdbootstrap.com/img/Photos/Others/men.jpg" alt="Card image cap">
+      <a>
+        <div class="mask rgba-white-slight"></div>
+      </a>
+    </div>
+  
+    <!-- Card content -->
+    <div class="card-body card-body-cascade text-center">
+  
+      <!-- Title -->
+      <h4 class="card-title"><strong><%=query[i].nombre %> <%=query[i].apaterno %> <%=query[i].amaterno %></strong></h4>
+      <!-- Subtitle -->
+      <h6 class="font-weight-bold indigo-text py-2"><%=query[i].tipopersona%></h6>
+      <!-- Text -->
+      <p class="card-text">Sexo: <%=query[i].sexo %>
+      <br>
+      Tipo de sangre: <%=query[i].tiposangre %>
+      <br>
+      Telefono: <%=query[i].telefono %>
+      <br>
+      Direccion: <%=query[i].direccion %>
+      <br>
+      Correo: <%=query[i].correo %>
+      <br>
+      Curp: <%=query[i].curp %>
+      <br>
+      RFC: <%=query[i].rfc %>
+      <br>
+      Matricula: <%=query[i].matricula %>
+      <br>
+      Contraseña: <%=query[i].contraseña %>
+    </p>
+    </div>
+  
+  </div>
+  <%}%>
+  <!-- Card Regular -->
+</div>
+
+    </div>
+</div>
+  
 
 <%- include('template/footer'); -%>
+<script>
+  
+</script>

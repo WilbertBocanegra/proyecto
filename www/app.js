@@ -2,6 +2,7 @@ const path = require('path')
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const sessions = require('express-session')
 const app = express();
 //connecting to db
 mongoose.connect('mongodb://localhost/secundaria')
@@ -16,6 +17,11 @@ app.set('view engine','ejs');
 //middlewares
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended:false}));
+app.use(sessions({
+    secret:'1234567890',
+    resave:false,
+    saveUninitialized:false
+}));
 // routes
 app.use('/',indexRoutes);
 

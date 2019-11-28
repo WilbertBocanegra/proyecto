@@ -7,8 +7,9 @@
 
 
 <div class="container">
-    <div class="row" style="margin-top:1em;">
-        <div class="col-md-5">
+    
+    <div class="row" style="margin-top:1em; margin-bottom: 1em;">
+            <div class="col-md-5">
                 <div class="card">
                     <div class="card-body">
                         <form id="form_clases" style="margin-top: 1em; margin-bottom: 1em;">
@@ -24,6 +25,15 @@
                                    <%}%>                
                             </select>
                                 </div> 
+                                <div class="form-group">
+                                        <label>Alumnos</label>
+                                        <select multiple name="nombre_alumno" class="selectpicker w-100">
+                                                <% for(var i=0; i<alumno.length; i++) {%>
+                                            <option value="<%=alumno[i].nombre%> <%=alumno[i].apaterno%> <%=alumno[i].amaterno%>"><%=alumno[i].nombre%> <%=alumno[i].apaterno%> <%=alumno[i].amaterno%></option>
+                                            <%}%>                
+   
+                                        </select>
+                                        </div>  
                                   <div class="form-group">
                                       <label>Profesor</label>
                                       <select class="custom-select" name="profesor">
@@ -128,3 +138,8 @@
     
     </script>
 <%- include('template/footer'); -%>
+
+<script>
+$('.selectpicker').selectpicker();
+
+</script>

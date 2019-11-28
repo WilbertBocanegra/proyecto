@@ -9,7 +9,18 @@ const clases = new Schema({
     grado:String,
     turno:String,
     aula:String,
-    hora:String
+    hora:String,
+    alumnos:{
+        nombre:String,
+        asistencia:{
+            type:Boolean,
+            default:false
+        },
+        calificacion:{
+            type:String,
+            default:'0'
+        }
+    }
 });
 
 module.exports = mongoose.model('clases', clases);
