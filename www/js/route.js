@@ -14,7 +14,7 @@ const Tiposangre = require('../databasemodel/sangre');
 router.get('/', async(req,res)=>{
     //const tasks = await Task.find();
     //console.log(tasks);
-    res.render('vista_administrador'/*,{
+    res.render('login'/*,{
         tasks
     }*/)
 });
@@ -277,6 +277,30 @@ router.get('/vista_administrador/',(req,res)=>{
     res.render('vista_administrador');
 });
 
+//ruta get perfil alumno
+router.get('/perfil_alumno/',(req,res)=>{
+    res.render('perfil_alumno');
+});
+//ruta get horario alumno
+router.get('/horarios_alumnos/',(req,res)=>{
+    res.render('horario_alumno');
+});
+//ruta get calificaciones alumno
+router.get('/calificaciones_alumnos/',(req,res)=>{
+    res.render('calificaciones_alumnos');
+});
+//ruta get calificaciones maestro
+router.get('/calificaciones_maestro/',(req,res)=>{
+    res.render('calificaciones_maestro');
+});
+//ruta get horario maestro
+router.get('/horario_maestros/',(req,res)=>{
+    res.render('horarios_maestro');
+});
+//ruta get perfil maestro
+router.get('/perfil_maestro/',(req,res)=>{
+    res.render('perfil_maestros');
+});
 router.post('/add', async(req, res) =>{
    const task = new Task(req.body);
    await task.save();
