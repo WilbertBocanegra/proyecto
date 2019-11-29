@@ -2,7 +2,8 @@
 <nav class="navbar navbar-dark bg-dark mb-4">
     <a href="/vista_maestros/"  class="navbar-brand">atras</a>
 </nav>
-<pre><%=query%></pre>
+
+
 <div class="container">
         <div class="row" style="margin-top:1em;">
                                 <div class="col-md-11">
@@ -10,51 +11,66 @@
                                             <thead>
                                                 <tr>
                                                     <th>N</th>
-                                                    <th>Nombre</th>
                                                     <th>Asignatura</th>
-                                                    <th>Calificación</th>
+                                                    <th>Grado</th>
+                                                    <th>Aula</th>
+                                                    <th>Grupo</th>
+                                                    <th>Turno</th>
                                                     <th>Asistencia</th>
+                                                    <th>Unidad 1</th>
+                                                    <th>Unidad 2</th>
+                                                    <th>Unidad 3</th>
+                                                    <th>Unidad 4</th>
+                                                    <th>Unidad 5</th>
+
                                                </tr>
                                                     </thead>
-                                                <tbody>
-                                          <% for(var i=0; i<query.length; i++){ 
-                                            
-                                            
-                                            
-                                            %>
-                                        <tr>
-                                            <td><%= i + 1 %></td>
-                                            <td><%= query[i].items %></td>
-                                            <td><%= query[i].asignatura%></td>
-                                            <td>   <div class="form-group">
-                                                    <select onchange="cambio()" class="custom-select" name="calificacion">
-                                                               <option value="6">6</option>
-                                                               <option value="7">7</option>
-                                                               <option value="8">8</option>
-                                                               <option value="9">9</option>
-                                                               <option value="10">10</option>
-                                                </select>
-
-                                            <!--<td>
-                                                    <a href="#" class="btn">Done</a>
-                                                    <a href="#" class="btn btn-danger">Delete</a>
-                                                    <a href="#" class="btn btn-info">Edit</a>
-                                                </td>-->
-                                        </tr>
-                                        
-                                          <% } %>
+                                                <tbody id="table"> 
+                                      
                                                 </tbody>
                                         </table> 
                                                     </div>
                                                     <button  class="btn btn-block btn-primary">Guardar</button>
         </div>
        
-    
     </div>
 
 <%- include('template/footer'); -%>
 <script>
-function cambio(){
-    console.log("dato cambio")
-}
+$(document).ready(()=>{
+
+    $.ajax({
+                url:'/data/',
+                method:'get',
+                success:(data)=>{
+                    console.log(data);
+                    var html = "";
+                    data.map((e)=>{
+                        html+="<tr><td>"+e.aula+"</td><td>"+e.asignatura+"</td><td>"+ e.grado+
+                        "<td><td>"+e.grupo +"</td><td>"+e.turno+"</td><td>"+ e.datos[0]["asistencia"] +
+                                "</td><td>"+e.datos[0]["unidad1"]  +"</td>"+
+                                "</td><td>"+e.datos[0]["unidad2"] +"</td>"+
+                                "</td><td>"+e.datos[0]["unidad3"]  +"</td>"+
+                                "</td><td>"+e.datos[0]["unidad4"] +"</td>"+
+                                "</td><td>"+e.datos[0]["unidad5"]  +"</td>"+
+
+                            "</td></tr>"
+                    });
+                    $('#table').html(html);
+//+"</td><td>"+e.data[0][unidad1]
+
+                    return data;
+                },
+                error:(err)=>{
+        
+                },
+                beforeSend:(data)=>{
+
+                }
+        });
+
+})
+
+
+ 
 </script>

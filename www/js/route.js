@@ -255,18 +255,19 @@ router.post('/clases',async(req,res)=>{
     id_alumno.map((a)=>{
         Personas.find({_id:a}).then((data)=>{
             var nombre_alumno;
-for(x in data){
-    console.log(data[x].nombre)
-    items+=(items==""?"":",")+"\""+a+"\":{\"calificaciones\":\"0\",\"asistencia\":false,\"nombre\":\""+ data[x].nombre+" "+data[x].apaterno +" "+ data[x].amaterno  +"\"}";
-}
+                for(x in data){
+                    console.log(data[x].nombre);
+                }
         }).catch((err)=>{
 console.log(err)
         });
+        items+=(items==""?"":",")+"{\"unidad1\":\"6\",\"unidad2\":\"6\",\"unidad3\":\"6\",\"unidad4\":\"6\",\"unidad5\":\"6\",\"asistencia\":false}";
+
         //    items+=(items==""?"":",")+"\""+a+"\":{\"calificaciones\":\"0\",\"asistencia\":false,\"nombre\":\""+ data[x].nombre+" "+data[x].apaterno +" "+ data[x].amaterno  +"\"}";
 
     })
 
-    items=JSON.parse("{"+items.replace(/} {/g,",")+"}");
+    items=JSON.parse("["+items.replace(/} {/g,",")+"]");
     console.log(items);
     
     mongoose.connect('mongodb://localhost/secundaria',function(err,db){
@@ -279,7 +280,7 @@ console.log(err)
        turno:req.body.turno,
        aula:req.body.aula,
        hora:req.body.hora,
-       items
+       datos:items
     }
     )
        
@@ -356,6 +357,7 @@ router.get('/calificaciones_maestro/',async(req,res)=>{
     var sesion=req.session.user_id;
     var nombrecompleto=req.session.nombre;
     const query= await Clases.find({profesor:nombrecompleto});
+   // console.log(JSON.stringify(q))
 /*
     query.map((a)=>{
         console.log(a)
@@ -372,6 +374,12 @@ router.get('/calificaciones_maestro/',async(req,res)=>{
     });
 
 });
+router.get('/data/', async(req,res)=>{
+    var sesion=req.session.user_id;
+    var nombrecompleto=req.session.nombre;
+    const query= await Clases.find({profesor:nombrecompleto});
+    res.send(query)
+})
 //ruta get horario maestro
 router.get('/horario_maestros/',async(req,res)=>{
     var sesion=req.session.user_id;
