@@ -259,7 +259,7 @@ router.post('/clases',async(req,res)=>{
                     console.log(data[x].nombre);
                 }
         }).catch((err)=>{
-console.log(err)
+               console.log(err)
         });
         items+=(items==""?"":",")+"{\"unidad1\":\"6\",\"unidad2\":\"6\",\"unidad3\":\"6\",\"unidad4\":\"6\",\"unidad5\":\"6\",\"asistencia\":false}";
 
